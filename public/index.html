@@ -268,7 +268,12 @@
       <h4 class="mb-3">Login</h4>
       <form id="loginForm">
         <input type="email" id="loginEmail" class="form-control mb-2" placeholder="Email" required />
-        <input type="password" id="loginPassword" class="form-control mb-2" placeholder="Password" required />
+        <div class="input-group mb-2">
+          <input type="password" id="loginPassword" class="form-control" placeholder="Password" required />
+          <button class="btn btn-outline-secondary toggle-password" type="button" aria-label="Show/Hide password" data-target="#loginPassword">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
         <p id="loginMsg" class="text-danger small"></p>
         <button id="loginBtn" class="btn btn-primary w-100">Login</button>
       </form>
@@ -284,7 +289,12 @@
       <h4 class="mb-3">Signup</h4>
       <form id="signupForm">
         <input type="email" id="signupEmail" class="form-control mb-2" placeholder="Email" required />
-        <input type="password" id="signupPassword" class="form-control mb-2" placeholder="Password" required />
+        <div class="input-group mb-2">
+          <input type="password" id="signupPassword" class="form-control" placeholder="Password" required />
+          <button class="btn btn-outline-secondary toggle-password" type="button" aria-label="Show/Hide password" data-target="#signupPassword">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
         <select id="signupType" class="form-control mb-2" required>
           <option value="">Select type</option>
           <!-- <option value="admin">Admin</option> -->

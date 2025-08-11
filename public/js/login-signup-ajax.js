@@ -14,6 +14,34 @@ $(document).ready(function(){
 
     $('#signupForm, #loginForm').on('submit', function(e){ e.preventDefault(); });
 
+    // Toggle password visibility for any .toggle-password button
+    $(document).on('click', '.toggle-password', function(){
+        const targetSel = $(this).attr('data-target');
+        const $input = $(targetSel);
+        if (!$input.length) return;
+        const $icon = $(this).find('i');
+        const isPassword = $input.attr('type') === 'password';
+        $input.attr('type', isPassword ? 'text' : 'password');
+        // swap icon
+        if (isPassword) {
+            $icon.removeClass('bi-eye').addClass('bi-eye-slash');
+        } else {
+            $icon.removeClass('bi-eye-slash').addClass('bi-eye');
+        }
+    });
+
+    function clearPasswordField(selector) {
+        const $inp = $(selector);
+        $inp.val('');
+        // ensure it is masked and icon reset if a toggle exists
+        if ($inp.attr('type') !== 'password') $inp.attr('type', 'password');
+        const $btn = $(`.toggle-password[data-target="${selector}"]`);
+        const $icon = $btn.find('i');
+        if ($icon.length) {
+            $icon.removeClass('bi-eye-slash').addClass('bi-eye');
+        }
+    }
+
     // Signup AJAX
     $('#signupBtn').click(function(e){
         e.preventDefault();
@@ -34,6 +62,8 @@ $(document).ready(function(){
                 alert('Signup successful, but failed to send confirmation email.');
             }
             $('#signupMsg').text('Signup successful! Please log in.');
+            // Clear password after successful signup
+            clearPasswordField('#signupPassword');
         }).fail(function(xhr){
             let msg = xhr.responseJSON?.error || 'Signup failed';
             $('#signupMsg').text(msg);
@@ -59,6 +89,8 @@ $(document).ready(function(){
             sessionStorage.setItem('loggedInEmail', res.email);
             if (res.type) sessionStorage.setItem('userType', res.type);
             $('#loginMsg').text('Login successful!');
+            // Clear password after successful login
+            clearPasswordField('#loginPassword');
             setTimeout(function(){
                 alert('Login successful! Redirecting to '+res.type+' dashboard.');
                 if (res.type == 'volunteer') {
