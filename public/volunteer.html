@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/volunteer-ajax.js"></script>
+
+        <!-- Bootstrap JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .volunteer-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.11);
+        }
+        .volunteer-container h2 {
+            color: #007bff;
+            margin-bottom: 22px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+        }
+        .form-row {
+            display: flex;
+            gap: 18px;
+        }
+        .form-col {
+            flex: 1;
+        }
+        .save-btn, .update-btn {
+            min-width: 110px;
+        }
+        #msg {
+            margin-top: 15px;
+            color: red;
+        }
+        .error-message {
+            color: #d90429;
+            font-size: 0.97em;
+            margin-top: 3px;
+            margin-bottom: 2px;
+            background: #fff0f3;
+            border-left: 3px solid #d90429;
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: none;
+        }
+        .img-preview {
+            display: block;
+            max-width: 100px;
+            margin-top: 8px;
+        }
+        @media (max-width: 576px) {
+            .volunteer-container {
+                padding: 15px;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="volunteer-container">
+        <h2 class="text-center">Volunteer Profile</h2>
+        <form id="volunteerForm" enctype="multipart/form-data">
+            <div class="form-grid">
+                <div class="form-row mb-3">
+                    <div class="form-col">
+                        <label for="email" class="form-label">Gmail</label>
+                        <input class="form-control" type="email" id="email" name="email" required readonly>
+                        <span class="error-message" id="error-email"></span>
+                    </div>
+                    <div class="form-col">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input class="form-control" type="text" id="name" name="name" required>
+                        <span class="error-message" id="error-name"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-col">
+                        <label for="address" class="form-label">Address</label>
+                        <input class="form-control" type="text" id="address" name="address">
+                        <span class="error-message" id="error-address"></span>
+                    </div>
+                    <div class="form-col">
+                        <label for="contact" class="form-label">Phone Number</label>
+                        <input class="form-control" type="text" id="contact" name="contact" required>
+                        <span class="error-message" id="error-contact"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-col">
+                        <label for="city" class="form-label">City</label>
+                        <input class="form-control" type="text" id="city" name="city" required>
+                        <span class="error-message" id="error-city"></span>
+                    </div>
+                    <div class="form-col">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-control" id="gender" name="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="error-message" id="error-gender"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-col">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input class="form-control" type="date" id="dob" name="dob">
+                        <span class="error-message" id="error-dob"></span>
+                    </div>
+                    <div class="form-col">
+                        <label for="qualification" class="form-label">Qualification</label>
+                        <input class="form-control" type="text" id="qualification" name="qualification">
+                        <span class="error-message" id="error-qualification"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-col">
+                        <label for="occupation" class="form-label">Occupation</label>
+                        <input class="form-control" type="text" id="occupation" name="occupation">
+                        <span class="error-message" id="error-occupation"></span>
+                    </div>
+                    <div class="form-col">
+                        <label for="otherinfo" class="form-label">Other Info</label>
+                        <input class="form-control" type="text" id="otherinfo" name="otherinfo">
+                        <span class="error-message" id="error-otherinfo"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-col">
+                        <label for="idproofnum" class="form-label">ID Proof Number</label>
+                        <input class="form-control" type="text" id="idproofnum" name="idproofnum">
+                        <span class="error-message" id="error-idproofnum"></span>
+                    </div>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="form-col file-upload">
+                        <label class="form-label" for="selfpic">Self Picture</label>
+                        <input class="form-control" type="file" id="selfpic" name="selfpic" accept="image/*">
+                        <img id="selfpic-preview" class="img-preview" src="#" alt="Self Picture Preview" style="display:none;" />
+                        <input type="hidden" id="selfpic_old" name="selfpic_old">
+                        <span class="error-message" id="error-selfpic"></span>
+                    </div>
+                    <div class="form-col file-upload">
+                        <label class="form-label" for="idproof">ID Proof</label>
+                        <input class="form-control" type="file" id="idproof" name="idproof" accept="image/*">
+                        <img id="idproof-preview" class="img-preview" src="#" alt="ID Proof Preview" style="display:none;" />
+                        <input type="hidden" id="idproof_old" name="idproof_old">
+                        <span class="error-message" id="error-idproof"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-success save-btn" id="registerBtn">Save</button>
+                <button type="button" class="btn btn-primary update-btn" id="updateBtn" style="display:none;">Update</button>
+                <button type="button" class="btn btn-info save-btn" id="fetchBtn">Fetch Profile</button>
+            </div>
+        </form>
+        <div id="msg"></div>
+    </div>
+</body>
+</html>

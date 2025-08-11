@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .user-photo { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; }
+        .status-badge { font-size: .85rem; }
+        .table thead th { white-space: nowrap; }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container py-4">
+        <h2 class="text-center mb-4">Admin Dashboard</h2>
+
+        <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="vol-tab" data-bs-toggle="tab" data-bs-target="#volunteers" type="button" role="tab">Volunteers</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cli-tab" data-bs-toggle="tab" data-bs-target="#clients" type="button" role="tab">Clients</button>
+            </li>
+        </ul>
+
+        <div class="tab-content border border-top-0 rounded-bottom p-3 bg-white shadow-sm" id="adminTabsContent">
+            <div class="tab-pane fade show active" id="volunteers" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">All Volunteers</h5>
+                    <button class="btn btn-sm btn-outline-primary" id="refreshVols">Refresh</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>City</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="volBody"></tbody>
+                    </table>
+                </div>
+                <div id="volMsg" class="text-danger small"></div>
+            </div>
+
+            <div class="tab-pane fade" id="clients" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5 class="mb-0">All Clients</h5>
+                    <button class="btn btn-sm btn-outline-primary" id="refreshClients">Refresh</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>City</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientBody"></tbody>
+                    </table>
+                </div>
+                <div id="clientMsg" class="text-danger small"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function renderRows(list, $tbody) {
+            $tbody.empty();
+            if (!list || list.length === 0) {
+                $tbody.append('<tr><td colspan="7" class="text-center text-muted">No records found</td></tr>');
+                return;
+            }
+            list.forEach(function(u){
+                var statusNum = Number(u.status) === 1 ? 1 : 0;
+                var badge = statusNum === 1 ? '<span class="badge bg-success status-badge">Active</span>' : '<span class="badge bg-secondary status-badge">Blocked</span>';
+                var btnText = statusNum === 1 ? 'Block' : 'Resume';
+                var nextStatus = statusNum === 1 ? 0 : 1;
+                var row = `
+                    <tr data-email="${u.email}">
+                        <td>${u.photo ? `<img src="${u.photo}" class="user-photo" alt="photo">` : '-'}</td>
+                        <td>${u.name || '-'}</td>
+                        <td>${u.email}</td>
+                        <td>${u.city || '-'}</td>
+                        <td>${u.contact || '-'}</td>
+                        <td class="user-status">${badge}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-${statusNum===1?'danger':'success'} toggle-status" data-next="${nextStatus}">${btnText}</button>
+                        </td>
+                    </tr>`;
+                $tbody.append(row);
+            });
+        }
+
+        function loadUsers(type) {
+            var $msg = type === 'volunteer' ? $('#volMsg') : $('#clientMsg');
+            var $body = type === 'volunteer' ? $('#volBody') : $('#clientBody');
+            $msg.text('');
+            $.get('/admin/users', { type: type })
+            .done(function(rows){
+                renderRows(rows, $body);
+            })
+            .fail(function(xhr){
+                var err = (xhr.responseJSON && xhr.responseJSON.error) || 'Error fetching users';
+                $msg.text(err);
+            });
+        }
+
+        function updateStatus(email, status, $row){
+            $.ajax({
+                url: '/admin/user-status',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ email: email, status: status })
+            }).done(function(res){
+                var badge = Number(res.status) === 1 ? '<span class="badge bg-success status-badge">Active</span>' : '<span class="badge bg-secondary status-badge">Blocked</span>';
+                $row.find('.user-status').html(badge);
+                var $btn = $row.find('.toggle-status');
+                if (Number(res.status) === 1) {
+                    $btn.text('Block').removeClass('btn-outline-success').addClass('btn-outline-danger').attr('data-next', 0);
+                } else {
+                    $btn.text('Resume').removeClass('btn-outline-danger').addClass('btn-outline-success').attr('data-next', 1);
+                }
+            }).fail(function(xhr){
+                alert((xhr.responseJSON && xhr.responseJSON.error) || 'Failed to update status');
+            });
+        }
+
+        $(function(){
+            // Optional: basic session check
+            // if (!sessionStorage.getItem('loggedInEmail')) { window.location.href = 'index.html'; return; }
+
+            loadUsers('volunteer');
+
+            $('#refreshVols').on('click', function(){ loadUsers('volunteer'); });
+            $('#refreshClients').on('click', function(){ loadUsers('client'); });
+
+            $('button[data-bs-target="#clients"]').on('shown.bs.tab', function(){
+                loadUsers('client');
+            });
+
+            // Delegate toggle buttons
+            $('#volBody, #clientBody').on('click', '.toggle-status', function(){
+                var $btn = $(this);
+                var $row = $btn.closest('tr');
+                var email = $row.data('email');
+                var next = Number($btn.attr('data-next'));
+                updateStatus(email, next, $row);
+            });
+        });
+    </script>
+</body>
+</html>

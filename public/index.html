@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hopebridge - Beggar-Free Society</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body { background-color: #eaf3ff; }
+    .navbar-brand { font-weight: bold; font-size: 1.5rem; }
+    .btn-custom {
+      background-color: #6ea8fe; color: #073b4c; border-radius: 25px;
+      padding: 8px 20px; transition: transform 0.25s ease;
+      border: 0;
+    }
+    .btn-custom:hover { transform: translateY(-1px); background-color: #5593f6; }
+    .hero {
+      background: linear-gradient(135deg, #eef6ff, #f7fdfa);
+      color: #1f2937; text-align: center; padding: 100px 20px;
+    }
+    footer { background: #222; color: #ccc; padding: 20px; text-align: center; }
+    footer a { color: #00aced; text-decoration: none; }
+    .about-section { line-height: 1.7; }
+    .step-icon { font-size: 2.5rem; color: #007BFF; margin-bottom: 15px; }
+    .modal-content { border-radius: 12px; }
+    .modal h4 { font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background:#e8f1ff; border-bottom:1px solid #d9e6ff;">
+  <div class="container">
+    <a class="navbar-brand animate__animated animate__fadeInLeft" href="#">Hopebridge</a>
+    <div class="d-flex">
+      <button id="openLogin" class="btn btn-custom me-2 animate__animated animate__fadeInDown" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+      <button id="openSignup" class="btn btn-custom animate__animated animate__fadeInDown" data-bs-toggle="modal" data-bs-target="#signupModal">Signup</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div data-aos="fade-up">
+    <h1 class="animate__animated animate__fadeInDown">Towards a Beggar-Free Society</h1>
+    <p class="animate__animated animate__fadeInUp">Connecting those in need with those who can help</p>
+    <button class="btn btn-light mt-3" data-bs-toggle="modal" data-bs-target="#signupModal">Get Started</button>
+  </div>
+</section>
+
+<!-- Who You Are: Volunteers & Clients -->
+<section class="py-5" style="background:#f3f8ff;">
+  <div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4">Where You Fit In</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-people-fill fs-3 me-2" style="color:#49b6a6"></i>
+              <h5 class="mb-0">Volunteer</h5>
+            </div>
+            <p class="text-muted mb-2">Meet people in need, verify their details, capture their skills and interests, and upload dignified profiles.</p>
+            <ul class="mb-0 text-muted">
+              <li>Verify identity and basic info</li>
+              <li>Record skills, work interests, health notes</li>
+              <li>Upload ID proof and photo with consent</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-2">
+              <i class="bi bi-briefcase-fill fs-3 me-2" style="color:#5a8dee"></i>
+              <h5 class="mb-0">Client</h5>
+            </div>
+            <p class="text-muted mb-2">Publish job openings or training programs and hire capable individuals with verified backgrounds.</p>
+            <ul class="mb-0 text-muted">
+              <li>Post clear roles and requirements</li>
+              <li>Discover matching, verified profiles</li>
+              <li>Create dignified, sustainable outcomes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- Testimonials -->
+<section class="py-5" id="feedback" style="background:#ffffff;">
+  <div class="container" data-aos="zoom-in">
+    <h2 class="text-center mb-4">What People Say</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body">
+            <p class="mb-2">“I hired through Hopebridge. Within weeks, I saw genuine progress—confidence, routine, and stability.”</p>
+            <small class="text-muted">— Rahul K., Small Business Owner</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body">
+            <p class="mb-2">“This is not charity—it’s empowerment. Work restores dignity and changes lives.”</p>
+            <small class="text-muted">— Anita P., Volunteer Lead</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body">
+            <p class="mb-2">“The profiles are transparent and verified. Hiring felt responsible and impactful.”</p>
+            <small class="text-muted">— Omar H., HR Manager</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row g-4 mt-1">
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body">
+            <p class="mb-2">“The process is simple. I could focus on listening and documenting with dignity.”</p>
+            <small class="text-muted">— Simran, Volunteer</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body">
+            <p class="mb-2">“We found trainees who truly wanted to learn. The match felt thoughtful and human.”</p>
+            <small class="text-muted">— Karan, Training Provider</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow-sm h-100 border-0">
+          <div class="card-body">
+            <p class="mb-2">“Hopebridge gave me a chance to be seen for my skills. I’m back on my feet.”</p>
+            <small class="text-muted">— R., Placed Candidate</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- About Us -->
+<section class="container py-5" id="about">
+  <div class="row align-items-center">
+    <div class="col-lg-12 about-section" data-aos="fade-right">
+      <h2>About Hopebridge</h2>
+      <p>
+        Hopebridge transforms compassion into opportunity with a simple, human workflow. 
+        We connect verified human potential to real jobs and training using a trusted, community-first model.
+      </p>
+      <p>
+        <strong>Volunteers</strong> respectfully meet people in need, verify their identities and interests, and upload their profiles.
+        <strong>Clients</strong> and employers publish opportunities. Our platform helps match the right person to the right role.
+      </p>
+      <div class="row g-3 mt-2">
+        <div class="col-sm-6">
+          <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+            <i class="bi bi-shield-check text-primary me-2"></i>
+            Transparent, volunteer-verified profiles
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+            <i class="bi bi-graph-up-arrow text-success me-2"></i>
+            Outcome-focused: jobs and training
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+            <i class="bi bi-people text-info me-2"></i>
+            Community-powered, dignity-first
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="p-3 bg-white rounded-3 shadow-sm h-100">
+            <i class="bi bi-lock-fill text-danger me-2"></i>
+            Privacy-aware, minimal data
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<!-- How It Works -->
+<section class="py-5" id="how" style="background: #f8fbff;">
+  <div class="container" data-aos="fade-up">
+    <h2 class="text-center mb-4">What We Do</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-briefcase-fill step-icon" style="color:#5a8dee"></i>
+            <h5 class="fw-semibold">Clients Post Jobs</h5>
+            <p class="text-muted mb-0">Businesses and individuals post jobs or training. Clear requirements help us match the right person.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-people-fill step-icon" style="color:#49b6a6"></i>
+            <h5 class="fw-semibold">Volunteers Verify & Upload</h5>
+            <p class="text-muted mb-0">Volunteers meet people in need, verify details, capture skills, and upload beggar profiles with dignity.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card border-0 shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-search step-icon" style="color:#ff9f68"></i>
+            <h5 class="fw-semibold">Find Jobs & Get Hired</h5>
+            <p class="text-muted mb-0">Profiles are discoverable for matching jobs. Applications are simple, fast, and transparent.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Us -->
+<section class="container py-5" id="contact">
+  <div class="text-center" data-aos="fade-up">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:jpdhillon7176@" target="_blank">jpdhillon7176@</a></p>
+    <p>WhatsApp: <a href="https://wa.me/987656789" target="_blank">987656789</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/jaspindersinghdhillon" target="_blank">www.linkedin.com/in/jaspindersinghdhillon</a></p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>"Hopebridge is connecting society to a better place"</p>
+  <p>
+    Email: <a href="mailto:jpdhillon7176@" target="_blank">jpdhillon7176@</a> | 
+    WhatsApp: <a href="https://wa.me/987656789" target="_blank">987656789</a> | 
+    LinkedIn: <a href="https://www.linkedin.com/in/jaspindersinghdhillon" target="_blank">Profile</a>
+  </p>
+  <small>&copy; 2025 Hopebridge. All Rights Reserved.</small>
+</footer>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h4 class="mb-3">Login</h4>
+      <form id="loginForm">
+        <input type="email" id="loginEmail" class="form-control mb-2" placeholder="Email" required />
+        <input type="password" id="loginPassword" class="form-control mb-2" placeholder="Password" required />
+        <p id="loginMsg" class="text-danger small"></p>
+        <button id="loginBtn" class="btn btn-primary w-100">Login</button>
+      </form>
+      <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Signup Modal -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h4 class="mb-3">Signup</h4>
+      <form id="signupForm">
+        <input type="email" id="signupEmail" class="form-control mb-2" placeholder="Email" required />
+        <input type="password" id="signupPassword" class="form-control mb-2" placeholder="Password" required />
+        <select id="signupType" class="form-control mb-2" required>
+          <option value="">Select type</option>
+          <!-- <option value="admin">Admin</option> -->
+          <option value="volunteer">Volunteer</option>
+          <option value="client">Client</option>
+        </select>
+        <p id="signupMsg" class="text-danger small"></p>
+        <button id="signupBtn" class="btn btn-success w-100">Signup</button>
+      </form>
+      <button type="button" class="btn btn-secondary mt-2" data-bs-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="js/login-signup-ajax.js"></script>
+<script>
+  AOS.init({ duration: 1000 });
+</script>
+</body>
+</html>

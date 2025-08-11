@@ -1,0 +1,46 @@
+/* Minimal, neutral touch-up shared across pages */
+
+/* Base */
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  background-color: #f7f8fa; /* light neutral */
+  color: #1f2937; /* slate-800 */
+}
+
+/* Headings */
+h1, h2, h3 {
+  color: #111827; /* near-black */
+  font-weight: 600;
+}
+
+/* Containers (keep each page's specific layout but ensure consistent center) */
+.container, .profile-container, .dashboard-container, .postjob-container, .manager-container, .volunteer-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Cards */
+.card {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb; /* gray-200 */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* Buttons */
+.btn {
+  border-radius: 8px;
+}
+
+/* Forms */
+.form-control, .form-select {
+  border-radius: 8px;
+}
+.form-control:focus, .form-select:focus {
+  box-shadow: 0 0 0 .2rem rgba(59,130,246,.15); /* subtle focus ring */
+  border-color: #93c5fd;
+}
+
+/* Images */
+img { border-radius: 6px; }
+
+a.card { color: inherit; text-decoration: none; }
