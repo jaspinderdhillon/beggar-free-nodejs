@@ -267,6 +267,11 @@ app.post('/login', (req, res) => {
         if (results.length === 0) {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
+        // Blocked user handling
+        const user = results[0];
+        if (Number(user.status) === 0) {
+            return res.status(403).json({ error: 'sorry u have been blocked by the admin. kindly contact for the account working again' });
+        }
         // Return user type for dashboard redirect
         sendMail(email, 'Login Confirmation', 'Thank you for logging in to HOPEBRIDGE');
         res.json({ success: true, email, type: results[0].type });
